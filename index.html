@@ -42,14 +42,15 @@ overview: true
         } 
         if(sig1) sig1 = sig1.trim();
         if(sig2) sig2 = sig2.trim();
-        let h = keccak_256.update(sig1 + sig2).toString();
-        document.getElementById("hash").value = h;
+        
+	// собственно вычисления    
+	let h = keccak_256.update(sig1 + sig2).toString();
         //alert(bigInt(h, 16).mod(participants));
-        console.log("est:"+"82614033324a23367120385a8ce9ae24d53a8c030380c9881b149327c8d6eb65"+"]");
-        console.log("is :"+h+"]");
-        let d = bigInt(h, 16).mod(9);
+        let d = bigInt(h, 16).mod(participants);
         console.log(d);
-        document.getElementById("luckyNumber").value = d.value + 1;
+
+	document.getElementById("hash").value = h;
+        document.getElementById("luckyNumber").value = (d.value + 1);
         
     }
     
