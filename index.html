@@ -2,7 +2,7 @@
 layout: default
 overview: true
 ---
-<div onLoad="updateValues()">
+<div >
     <div>
     <label>Сигнатура аннонса</label><br/>
     <textarea id="sig1" cols="100" rows="5"></textarea>
@@ -32,7 +32,7 @@ overview: true
 <script src="BigInteger.min.js"></script>
 <script src="sha3.min.js"></script>
 
-<script  type="text/javascript">
+<script  type="text/javascript" onLoad="updateValues()">
 
     function calculate() {
         var sig1 = document.getElementById("sig1").value,
