@@ -1,13 +1,12 @@
-var golos = require("./golos");
+var axios = require("./axios");
 var global = require("./global");
 var log = require("./logger").getLogger(__filename);
 
-var keccak = require("keccak");
 var BigInt = require("big-integer");
 
 const WARN_DURATION = 1000 * 60 * 20; //post warning for 10 minutes to end of round
 
-let prevSig = null;
+let prevHash = null;
 
 let numbers = {};
 let blockCount = 0;
@@ -15,16 +14,15 @@ async function run() {
     
     while(true) {
         try {
-            let act = await golos.getCurrentServerTimeAndBlock();
-            let sig = await golos.getBlockSignature(act.block);
+            let response = await axios.get('/block?height=' + blockCount);
+            let hash = response.data.result.hash;
             blockCount++;
             
-            if(prevSig) {
-                let hasher = new keccak("keccak256");
-                hasher.update(prevSig + sig);
-                let sha3 = hasher.digest().toString("hex");
+            if(prevHash) {
+let hash_sum = prevHash+hash;
+                let sha3 = hash_sum.digest().toString("hex");
                 log.info("hash " + sha3);
-                let number = BigInt(sha3, 16).mod(12).value;
+                let number = BigInt(sha3, 16).mod(12);
                 log.info("счастливое число " + number);
                 if(numbers[number]) {
                     numbers[number] ++;
@@ -32,7 +30,7 @@ async function run() {
                     numbers[number] = 1;
                 } 
             }
-            prevSig = sig;
+            prevHash = hash;
             let kn = Object.keys(numbers);
             kn.sort((a,b) => {
                 a - b;

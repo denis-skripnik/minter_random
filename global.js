@@ -12,14 +12,10 @@ const CONFIG_FILE = HOME + "/.randomblockchain.js";
 
 
 module.exports.settings = {
-    golos_host : "https://golos.io",
-    golos_websocket : "wss://ws.golos.io",	
+    api : "https://golos.io",
     dbdir : "/tmp",
-    postingKey : "5A6F7F...",
-    userid : "bopox",
     startNewRound : false,
-    broadcast : false,
-    author : "ropox"
+    broadcast : false
 };
 
 function init() {

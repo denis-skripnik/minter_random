@@ -4,12 +4,12 @@ overview: true
 ---
 <div >
     <div>
-    <label>Сигнатура аннонса</label><br/>
-    <textarea id="sig1" cols="100" rows="5"></textarea>
+    <label>Хэш блока</label><br/>
+    <textarea id="hash1" cols="100" rows="5"></textarea>
     </div>
     <div>
-    <label>Сигнатура последнего блока</label><br/>
-    <textarea id="sig2" cols="100" rows="5"></textarea>
+    <label>Хэш последнего блока</label><br/>
+    <textarea id="hash2" cols="100" rows="5"></textarea>
 	</div>
     
     <div>
@@ -22,7 +22,7 @@ overview: true
     </div>
     
     <div>
-    <label>Хэш</label><br>
+    <label>Суммарный хэш</label><br>
     <input type="text" id="hash" size="100" /><br>
     <label>Счастливое число</label><br>
     <input type="text" id="luckyNumber" size="10" />
@@ -33,8 +33,8 @@ overview: true
 <script  type="text/javascript" >
 
     function calculate() {
-        var sig1 = document.getElementById("sig1").value,
-        sig2 = document.getElementById("sig2").value,
+        var hash1 = document.getElementById("hash1").value,
+        hash2 = document.getElementById("hash2").value,
         participants = parseInt(document.getElementById("participants").value);    
     
         if(!participants || participants < 2) {
@@ -44,13 +44,13 @@ overview: true
         if(sig2) sig2 = sig2.trim();
         
 	// собственно вычисления    
-	let h = keccak_256.update(sig1 + sig2).toString();
+	let h = (hash1+hash2).toString();
         //alert(bigInt(h, 16).mod(participants));
         let d = bigInt(h, 16).mod(participants);
         console.log(d);
 
 	document.getElementById("hash").value = h;
-        document.getElementById("luckyNumber").value = (d.value + 1);
+        document.getElementById("luckyNumber").value = (d.value;
         
     }
     
@@ -66,11 +66,11 @@ overview: true
             vars[hash[0]] = hash[1];
         }
         
-        if(vars["sig1"]) {
-            document.getElementById("sig1").value = vars["sig1"];
+        if(vars["hash1"]) {
+            document.getElementById("hash1").value = vars["hash1"];
         }
-        if(vars["sig2"]) {
-            document.getElementById("sig2").value = vars["sig2"];
+        if(vars["hash2"]) {
+            document.getElementById("hash2").value = vars["hash2"];
         }
         if(vars["p"]) {
             document.getElementById("participants").value = vars["p"];
@@ -78,7 +78,6 @@ overview: true
     }    
 
 </script>
-<script src="BigInteger.min.js"></script>
-<script src="sha3.min.js" onLoad="updateValues()"></script>
+<script src="BigInteger.min.js" onLoad="updateValues()"></script>
 
 </div>
